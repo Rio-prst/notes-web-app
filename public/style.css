@@ -74,6 +74,14 @@ h1 {
     cursor: pointer;
 }
 
+.char-limit {
+    font-size: 0.8rem;
+    color: rgb(179, 175, 175);
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+
 .modal-content input,
 .modal-content textarea {
     width: 100%;

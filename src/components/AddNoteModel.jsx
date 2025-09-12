@@ -16,7 +16,11 @@ class AddNoteModel extends React.Component {
     }
 
     onTitleChange(event) {
-        this.setState({title: event.target.value});
+        const value = event.target.value;
+
+        if (value.length <= 50) {
+            this.setState({title: value});
+        }
     }
 
     onBodyChange(event) {
@@ -29,12 +33,17 @@ class AddNoteModel extends React.Component {
     }
 
     render() {
+        const remainingChars = 50 - this.state.title.length;
+
         return (
             <div className='modal-overlay'>
                 <div className='modal-content'>
                     <button className='modal-close__button' onClick={this.props.onClose}><CircleX size={25}/></button>
                     <h2>Create a New Note</h2>
                     <form onSubmit={this.onSubmitHandler}>
+                        <p className='char-limit'>
+                            Remaining characters: {remainingChars}
+                        </p>
                         <input 
                         type='text'
                         placeholder='Note title'
