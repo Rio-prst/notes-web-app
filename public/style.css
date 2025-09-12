@@ -265,3 +265,33 @@ h1 {
 .search-bar input:focus {
     outline: none;
 }
+
+@media (max-width: 600px) {
+    .notes-item {
+        width: 100%; 
+        height: auto; 
+    }
+
+    .notes-list h2, 
+    .archived-list h2 {
+        padding-left: 20px; 
+    }
+
+    .search-bar {
+        width: 100%; 
+        max-width: none;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+    .notes-item {
+        width: 45%; 
+        height: auto;
+    }
+    }
+
+    @media (min-width: 901px) {
+    .notes-item {
+        width: 20%; 
+    }
+}

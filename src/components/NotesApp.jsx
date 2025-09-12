@@ -71,7 +71,8 @@ class NotesApp extends React.Component {
             note.title.toLowerCase().includes(searchKeyword.toLowerCase())
         );
 
-        const activeNotes = notes.filter((note) => !note.archived);
+        const activeNotes = filteredNotes.filter((note) => !note.archived);
+        const archivedNotes = filteredNotes.filter((note) => note.archived);
         const isEmpty = activeNotes.length === 0;
 
         return (
@@ -79,7 +80,7 @@ class NotesApp extends React.Component {
             <div className={isModalOpen ? 'notes-app-blur' : 'notes-app'}>
                 <NotesAppHeader onSearch={this.onSearchHandler}/>
                 <hr />
-                <NotesList notes={filteredNotes} onArchived={this.onArchivedHandler} onDelete={this.onDeleteHandler}/>
+                <NotesList notes={activeNotes} onArchived={this.onArchivedHandler} onDelete={this.onDeleteHandler}/>
 
                 {isEmpty ? (
                     <div className='add-note__button-wraper'>
@@ -89,7 +90,7 @@ class NotesApp extends React.Component {
                     <button className='add-note__button bottom' onClick={this.onToggleModel}><Plus/></button>
                 )}
 
-                <ArchivedList notes={filteredNotes} onArchived={this.onArchivedHandler} onDelete={this.onDeleteHandler}/>
+                <ArchivedList notes={archivedNotes} onArchived={this.onArchivedHandler} onDelete={this.onDeleteHandler}/>
             </div> 
 
             {isModalOpen && (

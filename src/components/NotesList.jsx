@@ -2,14 +2,12 @@ import React from 'react';
 import NotesItem from './NotesItem';
 
 function NotesList({notes, onArchived, onDelete}) {
-    const activeNotes = notes.filter((note) => !note.archived);
-
     return (
         <div className='notes-list'>
             <h2>Active Notes</h2>
-            {activeNotes.length > 0 ? (
+            {notes.length > 0 ? (
                 <div className='active-notes-list'>
-                    {activeNotes.map((note) => (
+                    {notes.map((note) => (
                         <NotesItem
                         key={note.id}
                         id={note.id}
