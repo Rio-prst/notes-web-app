@@ -1,6 +1,8 @@
 import React from 'react';
 import {CircleX} from 'lucide-react';
 
+const TITLE_LIMIT = 50;
+
 class AddNoteModel extends React.Component {
     constructor(props) {
         super(props);
@@ -18,7 +20,7 @@ class AddNoteModel extends React.Component {
     onTitleChange(event) {
         const value = event.target.value;
 
-        if (value.length <= 50) {
+        if (value.length <= TITLE_LIMIT) {
             this.setState({title: value});
         }
     }
@@ -33,7 +35,7 @@ class AddNoteModel extends React.Component {
     }
 
     render() {
-        const remainingChars = 50 - this.state.title.length;
+        const remainingChars = TITLE_LIMIT  - this.state.title.length;
 
         return (
             <div className='modal-overlay'>
