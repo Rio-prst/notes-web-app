@@ -43,6 +43,8 @@ const getInitialData = () => [
   },
 ];
 
+let notes = getInitialData();
+
 const showFormattedDate = (date) => {
   const options = {
     weekday: "long",
@@ -53,4 +55,32 @@ const showFormattedDate = (date) => {
   return new Date(date).toLocaleDateString("id-ID", options);
 };
 
-export { getInitialData, showFormattedDate };
+const getNotes = () => notes;
+
+const getNote = (id) => {
+  return notes.find((note) => note.id.toString() === id);
+}
+
+const addNote = (title, body) => {
+  const newNote = {
+    id: +new Date(),
+    title,
+    body,
+    createdAt: new Date().toISOString(),
+    archived: false
+  };
+
+  notes = [...notes, newNote];
+}
+
+const deleteNote = (id) => {
+  notes = notes.filter((note) => note.id !== id);
+}
+
+const archiveNote = (id) => {
+  notes = notes.map((note) =>
+    note.id === id ? {...note, archived: !note.archived} : note
+  );
+}
+
+export { getInitialData, showFormattedDate, getNote, deleteNote, archiveNote, getNotes, addNote };

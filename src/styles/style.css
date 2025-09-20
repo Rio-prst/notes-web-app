@@ -14,8 +14,18 @@ body {
     transition: filter 0.3s ease;
 }
 
+.search-bar-container {
+    display: flex;
+    justify-content: center;
+}
+
 .notes-app hr {
     border-color: rgb(6, 143, 143);
+}
+
+.notes-app h2 {
+    padding-top: 20px;
+    text-align: center;
 }
 
 header {
@@ -23,6 +33,15 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px
+}
+
+.navigation ul {
+    display: flex;
+    gap: 10px;
+}
+
+.navigation ul li {
+    list-style-type: none;
 }
 
 h1 {
@@ -34,91 +53,10 @@ h1 {
     flex-direction: column;
 }
 
-.notes-app-blur {
-    filter: blur(5px);
-    pointer-events: none;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.modal-content {
-    background-color: rgb(21, 24, 26);
-    color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
-    position: relative;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    z-index: 1001;
-}
-
-.modal-close__button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.char-limit {
-    font-size: 0.8rem;
-    color: rgb(179, 175, 175);
-    margin-bottom: 5px;
-    text-align: right;
-}
-
-
-.modal-content input,
-.modal-content textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: transparent;
-    border: 1px solid rgb(6, 143, 143);
-    color: white;
-    border-radius: 4px;
-    font-size: 0.95rem;
-}
-
-.modal-content input:focus,
-.modal-content textarea:focus {
-    outline: none;
-    border-color: rgb(0, 255, 255);
-}
-
-.modal-content button[type="submit"] {
-    background-color: rgb(19, 233, 19);
-    border: none;
-    border-radius: 6px;
-    padding: 10px 20px;
-    font-weight: bold;
-    cursor: pointer;
-    align-self: flex-end;
-    transition: background-color 0.2s ease;
-}
-
-.modal-content button[type="submit"]:hover {
-    background-color: rgb(27, 179, 27);
-}
-
 .notes-list h2, .archived-list h2 {
     padding-top: 20px;
     padding-bottom: 20px;
-    padding-left: 120px;
+    text-align: center;
 }
 
 .add-note__button {
@@ -189,16 +127,29 @@ h1 {
     flex-direction: column;
 }
 
+.notes-item a {
+    text-decoration: none;
+}
+
+.note-item__title {
+    color: white;
+}
+
+.notes-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 255, 255, 0.2);
+}
+
 .notes-item-header {
     flex-shrink: 0;
 }
 
 .note-item__content {
     max-height: 200px;
-    overflow-y: auto;
     margin-top: 8px;
     flex-grow: 1;
     font-size: 0.9rem;
+    overflow-y: auto;
 }
 
 .note-item__content::-webkit-scrollbar {
@@ -224,6 +175,9 @@ h1 {
     border: none;
     outline: none;
     border-radius: 3px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
 }
 
 .button-item__delete {
@@ -232,6 +186,9 @@ h1 {
     border: none;
     outline: none;
     border-radius: 3px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
 }
 
 .button-item__archived:hover {
@@ -249,7 +206,9 @@ h1 {
     background-color: rgb(21, 24, 26); 
     border-radius: 6px;
     border: 1px solid rgb(6, 143, 143); 
-    width: 300px;
+    width: 400px;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 
 .search-bar svg {
@@ -272,6 +231,123 @@ h1 {
 
 .search-bar input:focus {
     outline: none;
+}
+
+.detail-note__page-body {
+    padding-top: 50px;
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+.detail-note-page .note-item__title {
+    font-size: 3rem; 
+    margin: 0;
+}
+
+.detail-note-page .note-item__date {
+    font-size: 1rem; 
+}
+
+.detail-note-page .note-item__content {
+    font-size: 1rem; 
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.add-note {
+    max-width: 600px;
+    margin: 40px auto; 
+    padding: 20px;
+    background-color: rgb(30, 34, 37);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.add-note h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: rgb(0, 255, 255);
+    padding-left: 0;
+}
+
+.add-note form {
+    display: flex;
+    flex-direction: column;
+}
+
+.char-limit {
+    font-size: 0.8rem;
+    color: rgb(179, 175, 175);
+    margin-bottom: 5px;
+    text-align: right;
+}
+
+.add-note input,
+.add-note textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    background-color: transparent;
+    border: 1px solid rgb(6, 143, 143);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    resize: vertical; 
+}
+
+.add-note input:focus,
+.add-note textarea:focus {
+    outline: none;
+    border-color: rgb(0, 255, 255);
+}
+
+.add-note button[type="submit"] {
+    background-color: rgb(19, 233, 19);
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: background-color 0.2s ease;
+}
+
+.add-note button[type="submit"]:hover {
+    background-color: rgb(27, 179, 27);
+}
+
+.not-found-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 80px); 
+    text-align: center;
+    gap: 20px;
+}
+
+.not-found-page h2 {
+    font-size: 5rem;
+    color: rgb(0, 255, 255);
+    margin-bottom: 0;
+}
+
+.not-found-page p {
+    font-size: 1.2rem;
+    color: rgb(179, 175, 175);
+}
+
+.not-found-page a {
+    padding: 10px 20px;
+    background-color: rgb(6, 143, 143);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.2s ease;
+}
+
+.not-found-page a:hover {
+    background-color: rgb(0, 255, 255);
 }
 
 @media (max-width: 600px) {

@@ -1,16 +1,17 @@
 import React from 'react';
 import NotesItemHeader from './NotesItemHeader';
 import NotesItemBody from './NotesItemBody';
-import NotesItemButton from './NotesItemButton';
 import { showFormattedDate } from '../utils';
+import {Link} from 'react-router-dom';
 
-function NotesItem({id, title, body, createdAt, onArchived, onDelete}) {
+function NotesItem({id, title, body, createdAt}) {
     return (
-        <div className="notes-item">
-            <NotesItemHeader title={title} createdAt={showFormattedDate(createdAt)}/>
+        <div className='notes-item'>
+            <Link to={`/notes/${id}`}>
+                <NotesItemHeader title={title} createdAt={showFormattedDate(createdAt)}/>
+            </Link>
             <hr />
             <NotesItemBody body={body}/>
-            <NotesItemButton id={id} onArchived={onArchived} onDelete={onDelete}/>
         </div>
     );
 }

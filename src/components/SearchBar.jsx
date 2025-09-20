@@ -1,35 +1,24 @@
 import React from 'react';
 import {Search} from 'lucide-react';
+import PropTypes from 'prop-types';
 
-class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
+function SearchBar({keyword, keywordChange}) {
+    return (
+        <div className='search-bar'>
+            <Search/>
+            <input 
+            type='text'
+            placeholder='search notes...'
+            value={keyword}
+            onChange={(event) => keywordChange(event.target.value)}
+            />
+        </div>
+    )
+}
 
-        this.state = {
-            searchKeyword: ''
-        };
-
-        this.onSearchChange = this.onSearchChange.bind(this);
-    }
-
-    onSearchChange(event) {
-        const value = event.target.value;
-        this.setState({searchKeyword: value});
-        this.props.onSearch(value);
-    }
-
-    render() {
-        return (
-            <div className='search-bar'>
-                <Search/>
-                <input type="text" 
-                placeholder="Search notes..." 
-                value={this.state.searchKeyword} 
-                onChange={this.onSearchChange}
-                />
-            </div>
-        );
-    }
+SearchBar.propTypes = {
+    keyword: PropTypes.string.isRequired,
+    keywordChange: PropTypes.func.isRequired
 }
 
 export default SearchBar;
