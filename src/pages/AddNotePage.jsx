@@ -1,13 +1,13 @@
 import React from 'react';
-import { addNote } from '../utils';
+import { addNote } from '../utils/network-data';
 import AddNoteModel from '../components/AddNoteModel';
 import { useNavigate } from 'react-router-dom';
 
 function AddNotePage() {
     const navigate = useNavigate();
 
-    function onAddNoteHandler({title, body}) {
-        addNote(title, body);
+    async function onAddNoteHandler({title, body}) {
+        await addNote({title, body});
         navigate('/');
     }
 

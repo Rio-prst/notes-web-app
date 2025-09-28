@@ -1,112 +1,78 @@
-import React from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import NotesList from '../components/NotesList.jsx';
-import {getNotes, deleteNote, archiveNote, addNote} from '../utils/index.js';
+import {getActiveNotes, deleteNote, archiveNote} from '../utils/network-data.js';
 import SearchBar from '../components/SearchBar.jsx';
 import {Plus} from 'lucide-react';
 import { useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import LocaleContext from '../context/LocaleContext.js';
+import { translation } from '../utils/localeContent.js';
 
-function HomePageWrapper() {
+function HomePage() {
     const [searchParams, setSearchParams] = useSearchParams();
+    const [notes, setNotes] = useState([]);
+    const [keyword, setKeyword] = useState(() => {
+        return searchParams.get('keyword') || ''
+    });
+    const [loading, setLoading] = useState(true);
+    const {locale} = useContext(LocaleContext);
 
-    const searchKeyword = searchParams.get('keyword');
+    useEffect(() => {
+        async function fetchNotes() {
+            setLoading(true);
+            const {data} = await getActiveNotes();
+            setNotes(data);
+            setLoading(false);
+        }
+        fetchNotes();
+    }, []);
 
-    function changeSearchParams(keyword) {
-        setSearchParams({keyword});
+    function onSearchHandler(newKeyword) {
+        setKeyword(newKeyword);
+        setSearchParams({keyword: newKeyword});
     }
 
-    return <HomePage defaultKeyword={searchKeyword} keywordChange={changeSearchParams}/>
-}
-
-class HomePage extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            notes: getNotes(),
-            searchKeyword: props.defaultKeyword || '',
-        };
-
-        this.onSearchHandler = this.onSearchHandler.bind(this);
-        this.onDeleteHandler = this.onDeleteHandler.bind(this);
-        this.onArchivedHandler = this.onArchivedHandler.bind(this);
-        this.onAddNoteHandler = this.onAddNoteHandler.bind(this);
+    async function onDeleteHandler(id) {
+        await deleteNote(id);
+        const {data} = await getActiveNotes(id);
+        setNotes(data);
     }
 
-    onSearchHandler(keyword) {
-        this.setState(() => {
-            return {
-                searchKeyword: keyword
-            }
-        });
-
-        this.props.keywordChange(keyword);
+    async function onArchivedHandler(id) {
+        await archiveNote(id);
+        const {data} = await getActiveNotes();
+        setNotes(data);
     }
 
-    onDeleteHandler(id) {
-        deleteNote(id);
-        
-        this.setState(() => {
-            return {
-                notes: getNotes()
-            }
-        });
-    }
+    const filteredNotes = notes.filter((note) => 
+        note.title.toLowerCase().includes(keyword.toLowerCase())
+    );
 
-    onArchivedHandler(id) {
-        archiveNote(id);
+    const activeNotes = filteredNotes.filter((note) => !note.archived);
+    const isEmpty = activeNotes.length === 0;
 
-        this.setState(() => {
-            return {
-                notes: getNotes()
-            }
-        });
-    }
-
-    onAddNoteHandler({title, body}) {
-        addNote({title, body});
-
-        this.setState(() => {
-            return {
-                notes: getNotes()
-            }
-        });
-    }
-
-    render() {
-        const filteredNotes = this.state.notes.filter((note) => {
-            return note.title.toLowerCase().includes(
-                this.state.searchKeyword.toLowerCase()
-            );
-        });
-
-        const activeNotes = filteredNotes.filter((note) => !note.archived);
-        const isEmpty = activeNotes.length === 0;
-
-        return (
-            <>
+    return (
+        <>
             <div className='notes-app'>
                 <hr />
-                <h2>Catatan Aktif</h2>
+                <h2>{translation[locale].activeNotes}</h2>
                 <div className='search-bar-container'>
-                    <SearchBar keyword={this.state.searchKeyword} keywordChange={this.onSearchHandler}/>
+                    <SearchBar keyword={keyword} keywordChange={onSearchHandler}/>
                 </div>
-                <NotesList notes={activeNotes}/>
-                {isEmpty ? (
-                    <div className='add-note__button-wraper'>
-                        <Link to='/add'>
-                            <button className='add-note__button center' onClick={this.onToggleModel}><Plus/></button>
-                        </Link>
-                    </div>
+                {loading ? (
+                    <p className='loading'>Loading ...</p>
+                ) : isEmpty ? (
+                    <p className='active-list-empty'>{translation[locale].isEmpty}</p>
                 ) : (
-                    <Link to='/add'>
-                        <button className='add-note__button bottom' onClick={this.onToggleModel}><Plus/></button>
-                    </Link>
+                    <NotesList notes={activeNotes} onArchived={onArchivedHandler} onDelete={onDeleteHandler} isArchived={false}/>
                 )}
-            </div> 
-            </>
-        );
-    }
+
+                <Link to='/add'>
+                    <button className={`add-note__button ${isEmpty ? 'center' : 'bottom'}`}><Plus/></button>
+                </Link>
+            </div>
+        </>
+    )
 }
 
-export default HomePageWrapper;
+export default HomePage;

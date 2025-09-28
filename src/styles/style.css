@@ -6,12 +6,24 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: rgb(21, 24, 26);
-    color: white;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .notes-app {
     transition: filter 0.3s ease;
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.notes-app.dark {
+    background-color: rgb(21, 24, 26);
+    color: white;
+}
+
+
+.notes-app.light {
+    background-color: #f7f9fd;
+    color: #333;
 }
 
 .search-bar-container {
@@ -32,16 +44,59 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px
+    padding: 20px 40px; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+}
+
+.title-and-tagline {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+}
+
+h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+.title-and-tagline p {
+    font-size: 14px;
+    color: #a0a0a0; 
 }
 
 .navigation ul {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 15px; 
+    margin: 0;
+    padding: 0;
 }
 
 .navigation ul li {
     list-style-type: none;
+}
+
+.navigation button,
+.navigation a {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px; 
+    border-radius: 8px; 
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; 
+}
+
+.navigation button:hover,
+.navigation a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navigation button svg {
+    margin-left: 5px;
 }
 
 h1 {
@@ -87,7 +142,10 @@ h1 {
 }
 
 .add-note__button.center {
-    position: relative;
+    position: absolute; 
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
 }
 
 .add-note__button.bottom {
@@ -348,6 +406,178 @@ h1 {
 
 .not-found-page a:hover {
     background-color: rgb(0, 255, 255);
+}
+
+.loading {
+    text-align: center;
+}
+
+.login-page, .register-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 80px); 
+    padding: 20px;
+    text-align: center;
+}
+
+.login-page h2, .register-page h2 {
+    font-size: 2.5rem;
+    color: rgb(0, 255, 255);
+    margin-bottom: 20px;
+}
+
+.input-login, .input-register {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    padding: 25px;
+    background-color: rgb(30, 34, 37);
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.input-login label, .input-register label {
+    align-self: flex-start;
+    font-size: 1rem;
+    color: rgb(179, 175, 175);
+}
+
+.input-login input, .input-register input {
+    width: 100%;
+    padding: 10px;
+    background-color: transparent;
+    border: 1px solid rgb(6, 143, 143);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+}
+
+.input-login input:focus, .input-register input:focus {
+    outline: none;
+    border-color: rgb(0, 255, 255);
+}
+
+.input-login button, .input-register button {
+    background-color: rgb(19, 233, 19);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.input-login button:hover, .input-register button:hover {
+    background-color: rgb(27, 179, 27);
+}
+
+.login-page p, .register-page p {
+    margin-top: 20px;
+    color: rgb(179, 175, 175);
+}
+
+.login-page p a, .register-page p a {
+    color: rgb(0, 255, 255);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.login-page p a:hover, .register-page p a:hover {
+    color: rgb(6, 143, 143);
+}
+
+.light {
+    background-color: #f7f9fd; 
+    color: #333; 
+}
+
+.light .login-input,
+.light .register-input,
+.light .add-note {
+    background-color: #fff; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.light .add-note input,
+.light .add-note textarea {
+    color: #333;
+}
+
+.light .input-login input,
+.light .input-register input {
+    color: #333; 
+}
+
+.light h1 {
+    color: #007bff; 
+}
+
+.light h2 {
+    color: #333; 
+}
+
+.light hr {
+    border-color: #ddd; 
+}
+
+.light .notes-item {
+    border: 2px solid #e0e0e0; /
+}
+
+.light .notes-item:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.light .search-bar {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+}
+
+.light .search-bar input {
+    color: #333;
+}
+
+.light .search-bar input::placeholder {
+    color: #888;
+}
+
+.light .search-bar svg {
+    color: #888;
+}
+
+.light .note-item__title {
+    color: #333;
+}
+
+.light .note-item__date {
+    color: #888;
+}
+
+.light .navigation button {
+    color: #333;
+    background: transparent;
+}
+.light .navigation a {
+    color: #333;
+}
+
+@media (max-width: 480px) {
+    .input-login, .input-register {
+        padding: 15px;
+    }
+
+    .login-page h2, .register-page h2 {
+        font-size: 2rem;
+    }
 }
 
 @media (max-width: 600px) {

@@ -1,7 +1,7 @@
 import React from 'react';
 import NotesItem from './NotesItem';
 
-function NotesList({notes}) {
+function NotesList({notes, onArchived, onDelete, isArchived}) {
     return (
         <div className='notes-list'>
             {notes.length > 0 ? (
@@ -11,6 +11,9 @@ function NotesList({notes}) {
                         key={note.id}
                         id={note.id}
                         {...note}
+                        onArchive={onArchived}
+                        onDelete={onDelete}
+                        isArchived={isArchived}
                         />
                     ))}
                 </div>

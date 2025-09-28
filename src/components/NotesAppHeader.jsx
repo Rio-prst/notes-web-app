@@ -1,14 +1,22 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import Navigation from './Navigation';
+import LocaleContext from '../context/LocaleContext';
+import { translation } from '../utils/localeContent';
+import ThemeContext from '../context/ThemeContext';
 
-function NotesAppHeader() {
+function NotesAppHeader({authedUser, onLogout}) {
+    const {locale} = useContext(LocaleContext);
+    const {theme} = useContext(ThemeContext)
+
     return (
-        <header>
+        <header className={theme}>
             <div className='title-and-tagline'>
                 <h1>My Memo</h1>
-                <p>Manage your notes easely</p>
+                <p>{translation[locale].tagline}</p>
             </div>
-            <Navigation/>
+            {authedUser && (
+                <Navigation logout={onLogout} name={authedUser.name}/>
+            )}
         </header>
     );
 }
