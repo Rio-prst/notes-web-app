@@ -41,7 +41,10 @@ function NotesApp() {
 
     const toggleLocale = () => {
         setLocale((prevLocale) => {
-            return prevLocale === 'id' ? 'en' : 'id';
+            const newLocale = prevLocale ===  'id' ? 'en' : 'id';
+            localStorage.setItem('locale', newLocale);
+            return newLocale;
+
         });
     }
 
